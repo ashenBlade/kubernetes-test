@@ -1,0 +1,2 @@
+# kubernetes-test
+Пробую кубик
