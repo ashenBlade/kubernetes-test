@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: platform-service-deployment
+  labels:
+    app: PlatformService
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: PlatformService
+  strategy: 
+    type: RollingUpdate
+  template:
+    metadata:
+      name: PlatformService
+      labels:
+        app: PlatformService
+    spec:
+      containers:
+        - name: platform-service
+          image: ashenblade/platform-service:1.2
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: ConnectionStrings__Postgresql
+              value: 'Host=postgres-db-lb;Port=5432;User Id=postgres;Password=postgres;Database=postgres'
+            - name: 'KAFKA_BOOTSTRAP_SERVERS'
+              value: 'kafka-load-balancer:9092'
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: platform-service
+  labels:
+    app: PlatformService
+spec:
+  selector:
+    app: PlatformService
+  type: LoadBalancer
+  ports:
+    - port: 8080
+      targetPort: 80

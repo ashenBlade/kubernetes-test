@@ -1,0 +1,73 @@
+# Это параметры для запуска
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-config-map
+  labels:
+    app: postgres-db
+data:
+  POSTGRES_PASSWORD: 'postgres'
+  POSTGRES_USERNAME: 'postgres'
+  POSTGRES_DATABASE: 'postgres'
+  
+--- 
+# Сервис балансировщика нагрузки 
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-db-lb
+spec:
+  selector:
+    app: postgres-db
+  type: NodePort
+  ports:
+    - port: 5432
+      targetPort: 5432
+      nodePort: 32345
+---
+# Сам сервис
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres-db
+spec:
+  serviceName: postgres-db-service
+  selector:
+    matchLabels:
+      app: postgres-db
+  # Только 1 инстанс нужен
+  replicas: 1
+  
+  # Это уже само приложение
+  template:
+    metadata:
+      labels:
+        app: postgres-db
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:15-alpine
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - configMapRef:
+                name: postgres-config-map
+          resources:
+            requests:
+              memory: '256Mi'
+              cpu: '250m'
+            limits:
+              memory: '512Mi'
+              cpu: '500m'
+          volumeMounts:
+            - mountPath: /var/lib/postgresql
+              name: postgres-db-disk
+  volumeClaimTemplates:
+    - metadata:
+        name: postgres-db-disk
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: '1Gi'

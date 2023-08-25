@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Platform.Web", "Platform.Web\Platform.Web.csproj", "{37DD22C0-ABC3-4C8C-8ED9-910CA5831A6E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.KafkaEvents", "Common.KafkaEvents\Common.KafkaEvents.csproj", "{9929D566-CA77-4B03-BF41-13F4E82CD2CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commands.Web", "Commands.Web\Commands.Web.csproj", "{53AC2629-4D18-46D6-9949-DF43F108AC87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseObserver.Worker", "DatabaseObserver.Worker\DatabaseObserver.Worker.csproj", "{FCC444FC-8717-4269-98CC-D29B3B395DC8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{37DD22C0-ABC3-4C8C-8ED9-910CA5831A6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37DD22C0-ABC3-4C8C-8ED9-910CA5831A6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37DD22C0-ABC3-4C8C-8ED9-910CA5831A6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37DD22C0-ABC3-4C8C-8ED9-910CA5831A6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9929D566-CA77-4B03-BF41-13F4E82CD2CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9929D566-CA77-4B03-BF41-13F4E82CD2CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9929D566-CA77-4B03-BF41-13F4E82CD2CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9929D566-CA77-4B03-BF41-13F4E82CD2CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53AC2629-4D18-46D6-9949-DF43F108AC87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53AC2629-4D18-46D6-9949-DF43F108AC87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53AC2629-4D18-46D6-9949-DF43F108AC87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53AC2629-4D18-46D6-9949-DF43F108AC87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCC444FC-8717-4269-98CC-D29B3B395DC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCC444FC-8717-4269-98CC-D29B3B395DC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCC444FC-8717-4269-98CC-D29B3B395DC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCC444FC-8717-4269-98CC-D29B3B395DC8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,25 @@
+version: '3.0'
+
+services: 
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USERNAME: postgres
+      POSTGRES_DATABASE: postgres
+    ports:
+      - '5432:5432'
+  platform:
+    build:
+      context: .
+      dockerfile: Platform.Web/Dockerfile
+    environment:
+      ConnectionStrings__Postgresql: "Host=postgres;Port=5432;Database=postgres;User Id=postgres;Password=postgres"
+    ports:
+      - '8080:80'
+  redis:
+    image: bitnami/redis:7.0
+    environment:
+      ALLOW_EMPTY_PASSWORD: 'yes'
+    ports:
+      - '6379:6379'

@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-service
+  labels:
+    app: redis-service 
+spec:
+  ports:
+    - port: 6379 # Входящий порт
+      targetPort: 6379 # Порт контейнера
+  selector:
+    app: redis # На какие поды направлять трафик
+  type: LoadBalancer 
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis-stateful-set
+  labels:
+    app: redis-stateful-set
+spec:
+  replicas: 1 # Кол-во инстансов
+  serviceName: redis-service  
+  selector: # Какие поды будут управляться этим ReplicaSet
+    matchLabels:
+      app: redis
+  template: # Шаблон для создания подов 
+    metadata:
+      name: redis-container
+      labels:
+        app: redis
+    spec:
+      containers:
+        - name: redis
+          image: bitnami/redis:7.0
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: ALLOW_EMPTY_PASSWORD
+              value: 'yes'
+          ports:
+            - containerPort: 6379
+          volumeMounts:
+            - mountPath: /bitnami/redis
+              name: redis-disk
+      restartPolicy: Always
+  volumeClaimTemplates:
+    - metadata:
+        name: redis-disk
+      spec:
+        resources:
+          requests:
+            storage: '256Mi'
+        accessModes: [ "ReadWriteOnce" ]

@@ -1,0 +1,31 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: database-observer
+  labels:
+    app: database-observer
+spec:
+  schedule: '*/5 * * * *'
+  startingDeadlineSeconds: 10
+  failedJobsHistoryLimit: 2
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    metadata:
+      name: database-observer-job
+      labels:
+        app: database-observer-job
+    spec:
+      template:
+        metadata:
+          labels:
+            app: database-observer
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: observer
+              image: ashenblade/db-observer:1.0
+              imagePullPolicy: IfNotPresent
+              env:
+                - name: DATABASE_CONNECTION_STRING
+                  value: 'Host=postgres-db-lb;Port=5432;Database=postgres;User Id=postgres;Password=postgres'
+              
